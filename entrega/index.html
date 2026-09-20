@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Entrega · AI Builders Hackathon</title>
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #5b21b6;
+        --brand-deep: #4c1d95;
+        --action: #0f766e;
+        --ink: #0f0a1e;
+        --surface: #f4efe6;
+        --panel: #fffdf9;
+        --on-brand: #fbf8f3;
+        --danger: #b91c1c;
+        --border-warm: #c4b49a61;
+        --sidebar: 15rem;
+        --font-display: 'Barlow Condensed', Impact, sans-serif;
+        --font-sans: Poppins, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        line-height: 1.65;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        margin: 0 0 0.6rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.87em;
+        background: #0f0a1e0f;
+        padding: 0.12em 0.38em;
+        border-radius: 4px;
+      }
+
+      /* ── Menu lateral ──────────────────────────────────────────────────── */
+
+      .side {
+        flex: 0 0 var(--sidebar);
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(160deg, var(--brand-deep), var(--brand));
+        color: var(--on-brand);
+      }
+
+      .side .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.35rem 1.25rem;
+        border-bottom: 1px solid #ffffff26;
+      }
+
+      .side .brand img {
+        width: 2.4rem;
+        height: auto;
+        flex: 0 0 auto;
+      }
+
+      .side .brand h1 {
+        font-size: 1.15rem;
+        line-height: 1.15;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .side .brand .sub {
+        font-size: 0.65rem;
+        opacity: 0.72;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .side nav {
+        padding: 1rem 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .side .label {
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        padding: 0.5rem 0.6rem 0.3rem;
+      }
+
+      .side nav a {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--on-brand);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.55rem 0.7rem;
+        border-radius: 8px;
+        border-left: 3px solid transparent;
+        transition: background 120ms ease;
+      }
+
+      .side nav a .num {
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #ffffff26;
+      }
+
+      .side nav a:hover,
+      .side nav a:focus-visible {
+        background: #ffffff1f;
+      }
+
+      body[data-path='/'] a[href='/'],
+      body[data-path='/contenido'] a[href='/contenido/'],
+      body[data-path='/desafio'] a[href='/desafio/'],
+      body[data-path='/evaluacion'] a[href='/evaluacion/'],
+      body[data-path='/entrega'] a[href='/entrega/'] {
+        background: var(--surface);
+        color: var(--brand-deep);
+        border-left-color: var(--action);
+        font-weight: 600;
+      }
+
+      body[data-path='/'] a[href='/'] .num,
+      body[data-path='/contenido'] a[href='/contenido/'] .num,
+      body[data-path='/desafio'] a[href='/desafio/'] .num,
+      body[data-path='/evaluacion'] a[href='/evaluacion/'] .num,
+      body[data-path='/entrega'] a[href='/entrega/'] .num {
+        background: var(--action);
+        color: var(--on-brand);
+      }
+
+      .side .foot {
+        margin-top: auto;
+        padding: 1rem 1.35rem 1.25rem;
+        font-size: 0.7rem;
+        opacity: 0.6;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Cuerpo ────────────────────────────────────────────────────────── */
+
+      main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Barra superior: descarga en Markdown ──────────────────────────── */
+
+      .topbar {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .md-dl {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--brand-deep);
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 999px;
+        padding: 0.35rem 0.85rem;
+        transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+      }
+
+      .md-dl svg {
+        width: 0.95rem;
+        height: 0.95rem;
+      }
+
+      .md-dl:hover,
+      .md-dl:focus-visible {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: var(--on-brand);
+      }
+
+      .page {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .wrap {
+        max-width: 60rem;
+      }
+
+      /* ── Tabs tipo folder ──────────────────────────────────────────────── */
+
+      .tabs {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 0.3rem;
+        padding-left: 0.5rem;
+      }
+
+      .tabs button {
+        appearance: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        min-width: 11rem;
+        padding: 0.7rem 1.6rem 0.55rem;
+        color: #0f0a1e8c;
+        background: #e7dfd2;
+        border: 1px solid var(--border-warm);
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        top: 2px;
+        transition: background 120ms ease, color 120ms ease;
+      }
+
+      .tabs button:hover {
+        color: var(--ink);
+        background: #efe8dc;
+      }
+
+      /* La pestana activa se une al panel: tapa su borde superior. */
+      .tabs button[aria-selected='true'] {
+        color: var(--brand-deep);
+        background: var(--panel);
+        top: 0;
+        padding-bottom: 0.75rem;
+        z-index: 1;
+      }
+
+      .tabs button[aria-selected='true']::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: var(--panel);
+      }
+
+      .panel {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 0 10px 0 0;
+        padding: 2rem 2.25rem 3rem;
+      }
+
+      .panel[hidden] {
+        display: none;
+      }
+
+      /* ── Contenido ─────────────────────────────────────────────────────── */
+
+      .lead {
+        font-size: 1.05rem;
+        color: #0f0a1ecc;
+        max-width: 46rem;
+      }
+
+      section.block {
+        border-top: 1px solid var(--border-warm);
+        padding-top: 1.4rem;
+        margin-top: 2rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 10px;
+        padding: 1.1rem 1.25rem;
+      }
+
+      .card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .card .meta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--action);
+        font-weight: 600;
+      }
+
+      a.card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      a.card:hover,
+      a.card:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px #4c1d951f;
+        border-color: var(--brand);
+      }
+
+      .pending {
+        border: 1px dashed var(--border-warm);
+        border-radius: 8px;
+        background: #0f0a1e05;
+        color: #0f0a1e80;
+        padding: 1.4rem;
+        text-align: center;
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 48rem) {
+        body {
+          flex-direction: column;
+        }
+
+        .side {
+          flex: 0 0 auto;
+        }
+
+        .side nav {
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 0.6rem;
+        }
+
+        .side .label,
+        .side .foot {
+          display: none;
+        }
+
+        .page {
+          padding: 1rem 1rem 0;
+        }
+
+        .topbar {
+          padding: 0.7rem 1rem 0;
+        }
+
+        .tabs button {
+          min-width: 0;
+          flex: 1;
+          padding-inline: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body data-path="/entrega">
+    <aside class="side">
+      <div class="brand">
+        <img src="/logo.png" alt="AI Builders" />
+        <div>
+          <h1>AI Builders · Hackathon</h1>
+          <div class="sub">Xela</div>
+        </div>
+      </div>
+
+      <nav aria-label="Secciones">
+        <span class="label">Secciones</span>
+        <a href="/"><span class="num">0</span> Resumen</a>
+        <a href="/contenido/"><span class="num">1</span> Contenido</a>
+        <a href="/desafio/"><span class="num">2</span> Desafío</a>
+        <a href="/evaluacion/"><span class="num">3</span> Evaluación</a>
+        <a href="/entrega/"><span class="num">4</span> Entrega</a>
+      </nav>
+
+      <div class="foot">Hackathon<br />AI Builders GT</div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <a class="md-dl" href="/hackaton.md" download
+           title="Descarga toda la documentación del hackatón en un solo Markdown, listo para dárselo a una IA">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v11" />
+            <path d="M7.5 9.5 12 14l4.5-4.5" />
+            <path d="M5 20h14" />
+          </svg>
+          Descargar todo (.md)
+        </a>
+      </div>
+      <style>
+  .entrega ul.plain {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .entrega ul.plain li {
+    margin-bottom: 0.45rem;
+  }
+
+  .entrega .note {
+    border-left: 3px solid var(--action);
+    background: #0f766e0d;
+    padding: 0.8rem 1.05rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .entrega .req {
+    border: 1px solid var(--border-warm);
+    border-radius: 10px;
+    background: var(--panel);
+    padding: 1.1rem 1.3rem;
+    margin-top: 0.9rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .entrega .req .n {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    line-height: 1;
+    flex: 0 0 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--brand);
+    color: var(--on-brand);
+  }
+
+  .entrega .req h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1.2rem;
+  }
+
+  .entrega .req p:last-child {
+    margin-bottom: 0;
+  }
+
+  .entrega .video {
+    border: 1px solid var(--border-warm);
+    border-radius: 10px;
+    background: var(--panel);
+    padding: 1.1rem 1.3rem;
+    margin-top: 0.9rem;
+  }
+
+  .entrega .video .meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--action);
+    font-weight: 600;
+  }
+
+  .entrega .video h3 {
+    margin: 0.15rem 0 0.4rem;
+    font-size: 1.2rem;
+  }
+
+  .entrega .video .dur {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: var(--brand);
+    color: var(--on-brand);
+    margin-left: 0.4rem;
+    vertical-align: 0.15rem;
+  }
+
+  .entrega .check {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+
+  .entrega .check li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .entrega .check li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--action);
+    font-weight: 700;
+  }
+</style>
+
+<div class="page entrega">
+  <div class="tabs" role="tablist" aria-label="Entrega">
+    <button type="button" role="tab" id="tab-codigo" aria-controls="codigo" aria-selected="true">
+      Código
+    </button>
+    <button type="button" role="tab" id="tab-audiovisual" aria-controls="audiovisual" aria-selected="false" tabindex="-1">
+      Audiovisual
+    </button>
+  </div>
+
+  <!-- ── Código ───────────────────────────────────────────────────────────── -->
+  <section class="panel" id="codigo" role="tabpanel" aria-labelledby="tab-codigo" tabindex="0">
+    <div class="wrap">
+      <h1>Código</h1>
+      <p class="lead">
+        Entregas un <b>repositorio público</b> que cualquiera pueda clonar, levantar localmente y
+        entender sin ayuda de tu equipo.
+      </p>
+
+      <div class="req">
+        <div class="n">1</div>
+        <div>
+          <h3>Repositorio público</h3>
+          <p>
+            El código vive en un repositorio de acceso público. Debe contener la solución completa:
+            la ingesta de datos, el dashboard y el agente.
+          </p>
+        </div>
+      </div>
+
+      <div class="req">
+        <div class="n">2</div>
+        <div>
+          <h3>Reproducible localmente</h3>
+          <p>
+            Un tercero debe poder clonar el repositorio y <b>ponerlo a funcionar en su propia
+            máquina</b> siguiendo tus pasos. Declara las versiones y dependencias que hacen falta, y
+            no dejes supuestos del entorno sin documentar.
+          </p>
+          <p>
+            Si algún componente requiere servicios en la nube, explica cómo configurarlos —sin
+            incluir credenciales en el repositorio.
+          </p>
+        </div>
+      </div>
+
+      <div class="req">
+        <div class="n">3</div>
+        <div>
+          <h3>Instrucciones de uso</h3>
+          <p>
+            Pasos concretos y ordenados para instalar, ejecutar y usar la solución: cómo se corre la
+            ingesta, cómo se abre el dashboard y cómo se interactúa con el agente.
+          </p>
+        </div>
+      </div>
+
+      <div class="req">
+        <div class="n">4</div>
+        <div>
+          <h3>Documentación formal</h3>
+          <p>
+            Más allá del "cómo se ejecuta", la documentación debe explicar <b>cómo está construida la
+            solución</b>: la arquitectura, qué hace cada componente, las decisiones técnicas que
+            tomaron y por qué, cómo trataron los datos, y las limitaciones conocidas.
+          </p>
+          <p>
+            Documenta también <b>qué herramientas de IA usaron y para qué</b>.
+          </p>
+        </div>
+      </div>
+
+      <section class="block">
+        <h2>Antes de entregar, verifica</h2>
+        <ul class="check">
+          <li>El repositorio es público y contiene los tres componentes.</li>
+          <li>Clonaste en limpio y el proyecto arranca siguiendo tus propias instrucciones.</li>
+          <li>La documentación explica la arquitectura y las decisiones, no solo los comandos.</li>
+          <li>No hay credenciales, llaves ni tokens en el código ni en el historial de commits.</li>
+          <li>No incluiste artefactos regenerables como dependencias instaladas o builds.</li>
+        </ul>
+      </section>
+
+      <div class="note">
+        La reproducibilidad y la documentación se califican directamente. Si el proyecto no arranca
+        siguiendo tu propio README, ese punto se pierde.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Audiovisual ──────────────────────────────────────────────────────── -->
+  <section class="panel" id="audiovisual" role="tabpanel" aria-labelledby="tab-audiovisual" tabindex="0" hidden>
+    <div class="wrap">
+      <h1>Audiovisual</h1>
+      <p class="lead">
+        Además del código, entregas <b>dos videos</b> de un máximo de 3 minutos cada uno. Son cortos
+        a propósito: obligan a explicar lo esencial con claridad.
+      </p>
+
+      <div class="video">
+        <span class="meta">Video 1</span>
+        <h3>Arquitectura del proyecto <span class="dur">máx. 3 min</span></h3>
+        <p>
+          Explica <b>cómo está construida</b> la solución: qué componentes tiene, cómo se conectan
+          entre sí, por dónde fluyen los datos desde el archivo original hasta llegar al dashboard y
+          al agente, y qué tecnologías eligieron.
+        </p>
+        <p>
+          Lo importante es que se note que <b>comprenden su propio diseño</b>: no describan solo lo
+          que hace, expliquen por qué lo armaron así.
+        </p>
+      </div>
+
+      <div class="video">
+        <span class="meta">Video 2</span>
+        <h3>Funcionamiento del proyecto <span class="dur">máx. 3 min</span></h3>
+        <p>
+          Muestra la solución <b>en funcionamiento</b>: recorran el dashboard, expliquen qué se ve en
+          las gráficas y en los análisis, y hagan preguntas reales al agente para que se vea cómo
+          responde.
+        </p>
+        <p>
+          Es una demostración, no una presentación de diapositivas: que se vea la herramienta
+          corriendo.
+        </p>
+      </div>
+
+      <section class="block">
+        <h2>Consideraciones</h2>
+        <ul class="plain">
+          <li>
+            <b>Máximo 3 minutos cada uno.</b> Lo que exceda ese tiempo puede no tomarse en cuenta.
+          </li>
+          <li>
+            Audio claro y pantalla legible. Si graban la pantalla, que el texto se pueda leer.
+          </li>
+          <li>
+            Pueden participar varios integrantes del equipo, pero cuiden que se entienda la
+            explicación.
+          </li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</div>
+
+    </main>
+
+    
+
+    <script>
+      // Tabs: una sola pestana visible. El hash de la URL elige la inicial.
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+      function select(id) {
+        for (const tab of tabs) {
+          const target = tab.getAttribute('aria-controls');
+          const active = target === id;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          document.getElementById(target).hidden = !active;
+        }
+      }
+
+      for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener('click', () => select(tab.getAttribute('aria-controls')));
+
+        // Flechas para moverse entre pestanas, como pide el patron de tablist.
+        tab.addEventListener('keydown', (event) => {
+          const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (step === 0) return;
+          const next = tabs[(index + step + tabs.length) % tabs.length];
+          select(next.getAttribute('aria-controls'));
+          next.focus();
+        });
+      }
+
+      if (tabs.length > 0) {
+        const fromHash = location.hash.slice(1);
+        const known = tabs.some((tab) => tab.getAttribute('aria-controls') === fromHash);
+        select(known ? fromHash : tabs[0].getAttribute('aria-controls'));
+      }
+    </script>
+  </body>
+</html>

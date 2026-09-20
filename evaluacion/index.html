@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evaluación · AI Builders Hackathon</title>
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #5b21b6;
+        --brand-deep: #4c1d95;
+        --action: #0f766e;
+        --ink: #0f0a1e;
+        --surface: #f4efe6;
+        --panel: #fffdf9;
+        --on-brand: #fbf8f3;
+        --danger: #b91c1c;
+        --border-warm: #c4b49a61;
+        --sidebar: 15rem;
+        --font-display: 'Barlow Condensed', Impact, sans-serif;
+        --font-sans: Poppins, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        line-height: 1.65;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        margin: 0 0 0.6rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.87em;
+        background: #0f0a1e0f;
+        padding: 0.12em 0.38em;
+        border-radius: 4px;
+      }
+
+      /* ── Menu lateral ──────────────────────────────────────────────────── */
+
+      .side {
+        flex: 0 0 var(--sidebar);
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(160deg, var(--brand-deep), var(--brand));
+        color: var(--on-brand);
+      }
+
+      .side .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.35rem 1.25rem;
+        border-bottom: 1px solid #ffffff26;
+      }
+
+      .side .brand img {
+        width: 2.4rem;
+        height: auto;
+        flex: 0 0 auto;
+      }
+
+      .side .brand h1 {
+        font-size: 1.15rem;
+        line-height: 1.15;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .side .brand .sub {
+        font-size: 0.65rem;
+        opacity: 0.72;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .side nav {
+        padding: 1rem 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .side .label {
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        padding: 0.5rem 0.6rem 0.3rem;
+      }
+
+      .side nav a {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--on-brand);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.55rem 0.7rem;
+        border-radius: 8px;
+        border-left: 3px solid transparent;
+        transition: background 120ms ease;
+      }
+
+      .side nav a .num {
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #ffffff26;
+      }
+
+      .side nav a:hover,
+      .side nav a:focus-visible {
+        background: #ffffff1f;
+      }
+
+      body[data-path='/'] a[href='/'],
+      body[data-path='/contenido'] a[href='/contenido/'],
+      body[data-path='/desafio'] a[href='/desafio/'],
+      body[data-path='/evaluacion'] a[href='/evaluacion/'],
+      body[data-path='/entrega'] a[href='/entrega/'] {
+        background: var(--surface);
+        color: var(--brand-deep);
+        border-left-color: var(--action);
+        font-weight: 600;
+      }
+
+      body[data-path='/'] a[href='/'] .num,
+      body[data-path='/contenido'] a[href='/contenido/'] .num,
+      body[data-path='/desafio'] a[href='/desafio/'] .num,
+      body[data-path='/evaluacion'] a[href='/evaluacion/'] .num,
+      body[data-path='/entrega'] a[href='/entrega/'] .num {
+        background: var(--action);
+        color: var(--on-brand);
+      }
+
+      .side .foot {
+        margin-top: auto;
+        padding: 1rem 1.35rem 1.25rem;
+        font-size: 0.7rem;
+        opacity: 0.6;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Cuerpo ────────────────────────────────────────────────────────── */
+
+      main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Barra superior: descarga en Markdown ──────────────────────────── */
+
+      .topbar {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .md-dl {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--brand-deep);
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 999px;
+        padding: 0.35rem 0.85rem;
+        transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+      }
+
+      .md-dl svg {
+        width: 0.95rem;
+        height: 0.95rem;
+      }
+
+      .md-dl:hover,
+      .md-dl:focus-visible {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: var(--on-brand);
+      }
+
+      .page {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .wrap {
+        max-width: 60rem;
+      }
+
+      /* ── Tabs tipo folder ──────────────────────────────────────────────── */
+
+      .tabs {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 0.3rem;
+        padding-left: 0.5rem;
+      }
+
+      .tabs button {
+        appearance: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        min-width: 11rem;
+        padding: 0.7rem 1.6rem 0.55rem;
+        color: #0f0a1e8c;
+        background: #e7dfd2;
+        border: 1px solid var(--border-warm);
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        top: 2px;
+        transition: background 120ms ease, color 120ms ease;
+      }
+
+      .tabs button:hover {
+        color: var(--ink);
+        background: #efe8dc;
+      }
+
+      /* La pestana activa se une al panel: tapa su borde superior. */
+      .tabs button[aria-selected='true'] {
+        color: var(--brand-deep);
+        background: var(--panel);
+        top: 0;
+        padding-bottom: 0.75rem;
+        z-index: 1;
+      }
+
+      .tabs button[aria-selected='true']::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: var(--panel);
+      }
+
+      .panel {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 0 10px 0 0;
+        padding: 2rem 2.25rem 3rem;
+      }
+
+      .panel[hidden] {
+        display: none;
+      }
+
+      /* ── Contenido ─────────────────────────────────────────────────────── */
+
+      .lead {
+        font-size: 1.05rem;
+        color: #0f0a1ecc;
+        max-width: 46rem;
+      }
+
+      section.block {
+        border-top: 1px solid var(--border-warm);
+        padding-top: 1.4rem;
+        margin-top: 2rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 10px;
+        padding: 1.1rem 1.25rem;
+      }
+
+      .card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .card .meta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--action);
+        font-weight: 600;
+      }
+
+      a.card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      a.card:hover,
+      a.card:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px #4c1d951f;
+        border-color: var(--brand);
+      }
+
+      .pending {
+        border: 1px dashed var(--border-warm);
+        border-radius: 8px;
+        background: #0f0a1e05;
+        color: #0f0a1e80;
+        padding: 1.4rem;
+        text-align: center;
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 48rem) {
+        body {
+          flex-direction: column;
+        }
+
+        .side {
+          flex: 0 0 auto;
+        }
+
+        .side nav {
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 0.6rem;
+        }
+
+        .side .label,
+        .side .foot {
+          display: none;
+        }
+
+        .page {
+          padding: 1rem 1rem 0;
+        }
+
+        .topbar {
+          padding: 0.7rem 1rem 0;
+        }
+
+        .tabs button {
+          min-width: 0;
+          flex: 1;
+          padding-inline: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body data-path="/evaluacion">
+    <aside class="side">
+      <div class="brand">
+        <img src="/logo.png" alt="AI Builders" />
+        <div>
+          <h1>AI Builders · Hackathon</h1>
+          <div class="sub">Xela</div>
+        </div>
+      </div>
+
+      <nav aria-label="Secciones">
+        <span class="label">Secciones</span>
+        <a href="/"><span class="num">0</span> Resumen</a>
+        <a href="/contenido/"><span class="num">1</span> Contenido</a>
+        <a href="/desafio/"><span class="num">2</span> Desafío</a>
+        <a href="/evaluacion/"><span class="num">3</span> Evaluación</a>
+        <a href="/entrega/"><span class="num">4</span> Entrega</a>
+      </nav>
+
+      <div class="foot">Hackathon<br />AI Builders GT</div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <a class="md-dl" href="/hackaton.md" download
+           title="Descarga toda la documentación del hackatón en un solo Markdown, listo para dárselo a una IA">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v11" />
+            <path d="M7.5 9.5 12 14l4.5-4.5" />
+            <path d="M5 20h14" />
+          </svg>
+          Descargar todo (.md)
+        </a>
+      </div>
+      <style>
+  .evaluacion table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.88rem;
+    margin-top: 0.6rem;
+  }
+
+  .evaluacion table th {
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--brand-deep);
+    border-bottom: 2px solid var(--border-warm);
+    padding: 0.4rem 0.6rem;
+  }
+
+  .evaluacion table td {
+    padding: 0.55rem 0.6rem;
+    border-bottom: 1px solid var(--border-warm);
+    vertical-align: top;
+  }
+
+  .evaluacion table tr:hover td {
+    background: #4c1d9508;
+  }
+
+  .evaluacion .peso {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1;
+    color: var(--brand-deep);
+    white-space: nowrap;
+    text-align: right;
+    width: 1%;
+  }
+
+  .evaluacion .bar {
+    height: 6px;
+    border-radius: 999px;
+    background: #4c1d9518;
+    margin-top: 0.35rem;
+    overflow: hidden;
+  }
+
+  .evaluacion .bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--brand), var(--brand-deep));
+  }
+
+  .evaluacion .bar.action span {
+    background: var(--action);
+  }
+
+  .evaluacion .note {
+    border-left: 3px solid var(--action);
+    background: #0f766e0d;
+    padding: 0.8rem 1.05rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .evaluacion .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .evaluacion .split > div {
+    border: 1px solid var(--border-warm);
+    border-radius: 10px;
+    padding: 0.9rem 1.05rem;
+    background: var(--panel);
+  }
+
+  .evaluacion .split b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--brand-deep);
+  }
+
+  .evaluacion .split span {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #0f0a1e99;
+  }
+
+  .evaluacion ul.plain {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .evaluacion ul.plain li {
+    margin-bottom: 0.4rem;
+  }
+</style>
+
+<div class="page evaluacion">
+  <div class="tabs" role="tablist" aria-label="Evaluación">
+    <button type="button" role="tab" id="tab-criterios" aria-controls="criterios" aria-selected="true">
+      Criterios
+    </button>
+    <button type="button" role="tab" id="tab-pitch" aria-controls="pitch" aria-selected="false" tabindex="-1">
+      Pitch
+    </button>
+    <button type="button" role="tab" id="tab-eval-sugerencias" aria-controls="eval-sugerencias" aria-selected="false" tabindex="-1">
+      Sugerencias
+    </button>
+  </div>
+
+  <!-- ── Criterios ────────────────────────────────────────────────────────── -->
+  <section class="panel" id="criterios" role="tabpanel" aria-labelledby="tab-criterios" tabindex="0">
+    <div class="wrap">
+      <h1>Criterios</h1>
+      <p class="lead">
+        El entregable se califica sobre <b>100 puntos</b>. El mayor peso no está en qué tan vistosa
+        quedó la herramienta, sino en <b>qué tanto comprendes y puedes explicar lo que construiste</b>.
+      </p>
+
+      <div class="split">
+        <div><b>40</b><span>Arquitectura y código</span></div>
+        <div><b>30</b><span>Comprensión de tu solución</span></div>
+        <div><b>15</b><span>Cumplir el reto</span></div>
+        <div><b>15</b><span>Prácticas y reproducibilidad</span></div>
+      </div>
+
+      <section class="block">
+        <h2>Desglose</h2>
+        <table>
+          <thead>
+            <tr><th>Peso</th><th>Criterio</th><th>Qué se evalúa</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="peso">30</td>
+              <td>
+                <b>Comprensión de tu solución</b>
+                <div class="bar"><span style="width: 100%"></span></div>
+              </td>
+              <td>
+                Que puedas explicar tu arquitectura y tu código: por qué lo armaste así, qué hace
+                cada parte y por qué elegiste esas herramientas. Es el criterio de mayor peso. Si no
+                puedes explicarlo, se evidencia que solo se lo pediste a una IA.
+              </td>
+            </tr>
+            <tr>
+              <td class="peso">20</td>
+              <td>
+                <b>Calidad de arquitectura</b>
+                <div class="bar"><span style="width: 66%"></span></div>
+              </td>
+              <td>
+                Que los tres componentes (ingesta, dashboard y agente) estén bien delimitados, con
+                decisiones coherentes que puedas justificar, y que el flujo de datos sea rastreable.
+              </td>
+            </tr>
+            <tr>
+              <td class="peso">20</td>
+              <td>
+                <b>Calidad de código</b>
+                <div class="bar"><span style="width: 66%"></span></div>
+              </td>
+              <td>
+                Legibilidad, modularidad, nombres claros, manejo de errores, y ausencia de
+                duplicación y código muerto.
+              </td>
+            </tr>
+            <tr>
+              <td class="peso">15</td>
+              <td>
+                <b>La herramienta cumple el reto</b>
+                <div class="bar action"><span style="width: 50%"></span></div>
+              </td>
+              <td>
+                Que el dashboard muestre y explique la información, y que el agente responda. Aquí
+                entra el <b>tratamiento correcto de los datos</b>: cifras que cuadren, etiquetas
+                legibles y análisis que no engañe.
+              </td>
+            </tr>
+            <tr>
+              <td class="peso">10</td>
+              <td>
+                <b>Buenas prácticas</b>
+                <div class="bar action"><span style="width: 33%"></span></div>
+              </td>
+              <td>
+                README completo, repositorio ordenado, decisiones documentadas y sin secretos ni
+                credenciales en la entrega.
+              </td>
+            </tr>
+            <tr>
+              <td class="peso">5</td>
+              <td>
+                <b>Reproducibilidad</b>
+                <div class="bar action"><span style="width: 17%"></span></div>
+              </td>
+              <td>
+                Que el proyecto arranque siguiendo tu propia documentación, ya sea en local o en la
+                nube.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="block">
+        <h2>Cómo se aplica cada criterio</h2>
+        <p>Dentro de su peso, cada criterio se ubica en uno de estos niveles:</p>
+        <ul class="plain">
+          <li><b>Excelente:</b> cumple de forma sobresaliente, con decisiones justificadas.</li>
+          <li><b>Bueno:</b> sólido, con detalles menores por pulir.</li>
+          <li><b>Aceptable:</b> cumple lo mínimo, con vacíos notables.</li>
+          <li><b>Insuficiente:</b> no cumple o comete errores que invalidan el resultado.</li>
+        </ul>
+      </section>
+
+      <div class="note">
+        El uso de IA <b>no resta puntos</b>. Lo que resta es no poder explicar ni justificar lo que
+        entregaste. Un equipo puede generar buena parte con IA y aun así obtener el puntaje completo
+        si demuestra que lo comprende y lo controla.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pitch ────────────────────────────────────────────────────────────── -->
+  <section class="panel" id="pitch" role="tabpanel" aria-labelledby="tab-pitch" tabindex="0" hidden>
+    <div class="wrap">
+      <h1>Pitch</h1>
+      <p class="lead">
+        Un <b>representante del equipo</b> expone ante los jueces qué hizo y cómo lo hizo. Después
+        viene una ronda de preguntas. En total, <b>10 minutos</b> por equipo.
+      </p>
+
+      <div class="split">
+        <div><b>5 min</b><span>Exposición</span></div>
+        <div><b>5 min</b><span>Preguntas de los jueces</span></div>
+      </div>
+
+      <section class="block">
+        <h2>La exposición · 5 minutos</h2>
+        <p>
+          Un integrante del equipo presenta el proyecto. No es una demostración de ventas: los jueces
+          quieren entender <b>qué construyeron</b> y, sobre todo, <b>cómo lo construyeron</b>.
+        </p>
+        <p>Cubre estos dos frentes:</p>
+        <ul class="plain">
+          <li>
+            <b>Qué hicieron:</b> qué resuelve la solución, qué muestra el dashboard y qué puede
+            responder el agente.
+          </li>
+          <li>
+            <b>Cómo lo hicieron:</b> cómo está armado el proyecto, cómo se conectan los componentes,
+            qué decisiones técnicas tomaron y qué papel tuvo la IA en el proceso.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>La ronda de preguntas · 5 minutos</h2>
+        <p>
+          Los jueces harán preguntas breves para confirmar que el equipo <b>comprende y controla lo
+          que entregó</b>. Son preguntas sobre su propio proyecto y su proceso, no un examen sobre
+          educación ni estadística.
+        </p>
+        <p>
+          Responder con seguridad y honestidad cuenta a favor. Decir "esto no lo alcanzamos" o "esto
+          lo generamos con IA y así funciona" es válido; lo que resta es no saber explicar lo que se
+          entregó.
+        </p>
+      </section>
+
+      <div class="note">
+        El pitch es la principal oportunidad para demostrar el criterio de mayor peso:
+        <b>la comprensión de su propia solución</b>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sugerencias ──────────────────────────────────────────────────────── -->
+  <section class="panel" id="eval-sugerencias" role="tabpanel" aria-labelledby="tab-eval-sugerencias" tabindex="0" hidden>
+    <div class="wrap">
+      <h1>Sugerencias</h1>
+      <p class="lead">
+        Cinco minutos se pasan rápido. Estas recomendaciones son para que aproveches el tiempo y
+        llegues tranquilo a tu presentación.
+      </p>
+
+      <section class="block">
+        <h2>Cómo estructurar tus 5 minutos</h2>
+        <p>
+          Una división que funciona bien y evita que te quedes sin tiempo en lo importante:
+        </p>
+        <ul class="plain">
+          <li>
+            <b>Medio minuto — el problema.</b> Una o dos frases: qué dataset es y por qué no se
+            entiende tal como viene.
+          </li>
+          <li>
+            <b>Un minuto y medio — qué construyeron.</b> Muestra el dashboard y el agente
+            funcionando. Que se vea antes de explicarlo.
+          </li>
+          <li>
+            <b>Dos minutos — cómo lo construyeron.</b> Los componentes, cómo se conectan y las
+            decisiones que tomaron. Esta es la parte que más pesa.
+          </li>
+          <li>
+            <b>Un minuto — aprendizajes y pendientes.</b> Qué les costó, qué resolverían distinto y
+            qué quedó fuera.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>Recomendaciones prácticas</h2>
+        <ul class="plain">
+          <li>
+            <b>Ensáyalo al menos una vez completo y con reloj.</b> Es la diferencia entre terminar
+            holgado y quedarte a medias.
+          </li>
+          <li>
+            <b>Ten la herramienta ya abierta y lista</b> antes de empezar. No gastes tu tiempo
+            levantando el proyecto o buscando la pestaña.
+          </li>
+          <li>
+            <b>Prepara de antemano una pregunta para hacerle al agente</b> en vivo, y verifica que
+            responde bien.
+          </li>
+          <li>
+            <b>Explica el "por qué", no solo el "qué".</b> "Separamos la ingesta del dashboard porque
+            así podíamos reprocesar sin tocar la interfaz" dice mucho más que "tenemos tres carpetas".
+          </li>
+          <li>
+            <b>Usa lenguaje sencillo.</b> Si tu solución se entiende explicada de forma simple, se
+            nota que la comprendes de verdad.
+          </li>
+          <li>
+            <b>Sé transparente con el uso de IA.</b> Di qué generaste con IA y qué escribiste tú. Está
+            permitido y se espera; ocultarlo solo genera dudas.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>Para la ronda de preguntas</h2>
+        <ul class="plain">
+          <li>
+            <b>Escucha la pregunta completa</b> antes de responder, y ve al punto: son respuestas de
+            alrededor de un minuto.
+          </li>
+          <li>
+            <b>Si no sabes algo, dilo.</b> "No llegamos a eso" o "esa parte no la alcancé a revisar a
+            fondo" es mejor respuesta que inventar. Los jueces lo notan.
+          </li>
+          <li>
+            <b>Anticipa lo previsible:</b> por qué eligieron sus herramientas, qué fue lo más difícil,
+            qué harían con más tiempo.
+          </li>
+          <li>
+            <b>Aunque exponga un representante, el equipo puede apoyar</b> si le preguntan algo de su
+            parte. Coordinen quién responde qué.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>Qué evitar</h2>
+        <ul class="plain">
+          <li>Gastar tres minutos en la introducción y llegar apurado a lo técnico.</li>
+          <li>Leer diapositivas de corrido sin mostrar el proyecto funcionando.</li>
+          <li>Mostrar cifras en el dashboard que no puedas explicar de dónde salen.</li>
+          <li>Describir el código línea por línea: interesa el diseño, no el recorrido completo.</li>
+        </ul>
+      </section>
+
+      <div class="note">
+        Un proyecto modesto bien entendido y bien explicado vale más que uno ambicioso que nadie del
+        equipo puede sustentar.
+      </div>
+    </div>
+  </section>
+</div>
+
+    </main>
+
+    
+
+    <script>
+      // Tabs: una sola pestana visible. El hash de la URL elige la inicial.
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+      function select(id) {
+        for (const tab of tabs) {
+          const target = tab.getAttribute('aria-controls');
+          const active = target === id;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          document.getElementById(target).hidden = !active;
+        }
+      }
+
+      for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener('click', () => select(tab.getAttribute('aria-controls')));
+
+        // Flechas para moverse entre pestanas, como pide el patron de tablist.
+        tab.addEventListener('keydown', (event) => {
+          const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (step === 0) return;
+          const next = tabs[(index + step + tabs.length) % tabs.length];
+          select(next.getAttribute('aria-controls'));
+          next.focus();
+        });
+      }
+
+      if (tabs.length > 0) {
+        const fromHash = location.hash.slice(1);
+        const known = tabs.some((tab) => tab.getAttribute('aria-controls') === fromHash);
+        select(known ? fromHash : tabs[0].getAttribute('aria-controls'));
+      }
+    </script>
+  </body>
+</html>

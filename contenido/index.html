@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contenido · AI Builders Hackathon</title>
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #5b21b6;
+        --brand-deep: #4c1d95;
+        --action: #0f766e;
+        --ink: #0f0a1e;
+        --surface: #f4efe6;
+        --panel: #fffdf9;
+        --on-brand: #fbf8f3;
+        --danger: #b91c1c;
+        --border-warm: #c4b49a61;
+        --sidebar: 15rem;
+        --font-display: 'Barlow Condensed', Impact, sans-serif;
+        --font-sans: Poppins, system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        background: var(--surface);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        line-height: 1.65;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        margin: 0 0 0.6rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.87em;
+        background: #0f0a1e0f;
+        padding: 0.12em 0.38em;
+        border-radius: 4px;
+      }
+
+      /* ── Menu lateral ──────────────────────────────────────────────────── */
+
+      .side {
+        flex: 0 0 var(--sidebar);
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(160deg, var(--brand-deep), var(--brand));
+        color: var(--on-brand);
+      }
+
+      .side .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.35rem 1.25rem;
+        border-bottom: 1px solid #ffffff26;
+      }
+
+      .side .brand img {
+        width: 2.4rem;
+        height: auto;
+        flex: 0 0 auto;
+      }
+
+      .side .brand h1 {
+        font-size: 1.15rem;
+        line-height: 1.15;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .side .brand .sub {
+        font-size: 0.65rem;
+        opacity: 0.72;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .side nav {
+        padding: 1rem 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .side .label {
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        padding: 0.5rem 0.6rem 0.3rem;
+      }
+
+      .side nav a {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--on-brand);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.55rem 0.7rem;
+        border-radius: 8px;
+        border-left: 3px solid transparent;
+        transition: background 120ms ease;
+      }
+
+      .side nav a .num {
+        font-family: var(--font-display);
+        font-size: 0.8rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #ffffff26;
+      }
+
+      .side nav a:hover,
+      .side nav a:focus-visible {
+        background: #ffffff1f;
+      }
+
+      body[data-path='/'] a[href='/'],
+      body[data-path='/contenido'] a[href='/contenido/'],
+      body[data-path='/desafio'] a[href='/desafio/'],
+      body[data-path='/evaluacion'] a[href='/evaluacion/'],
+      body[data-path='/entrega'] a[href='/entrega/'] {
+        background: var(--surface);
+        color: var(--brand-deep);
+        border-left-color: var(--action);
+        font-weight: 600;
+      }
+
+      body[data-path='/'] a[href='/'] .num,
+      body[data-path='/contenido'] a[href='/contenido/'] .num,
+      body[data-path='/desafio'] a[href='/desafio/'] .num,
+      body[data-path='/evaluacion'] a[href='/evaluacion/'] .num,
+      body[data-path='/entrega'] a[href='/entrega/'] .num {
+        background: var(--action);
+        color: var(--on-brand);
+      }
+
+      .side .foot {
+        margin-top: auto;
+        padding: 1rem 1.35rem 1.25rem;
+        font-size: 0.7rem;
+        opacity: 0.6;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Cuerpo ────────────────────────────────────────────────────────── */
+
+      main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Barra superior: descarga en Markdown ──────────────────────────── */
+
+      .topbar {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .md-dl {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--brand-deep);
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 999px;
+        padding: 0.35rem 0.85rem;
+        transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+      }
+
+      .md-dl svg {
+        width: 0.95rem;
+        height: 0.95rem;
+      }
+
+      .md-dl:hover,
+      .md-dl:focus-visible {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: var(--on-brand);
+      }
+
+      .page {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 0.9rem 1.75rem 0;
+      }
+
+      .wrap {
+        max-width: 60rem;
+      }
+
+      /* ── Tabs tipo folder ──────────────────────────────────────────────── */
+
+      .tabs {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 0.3rem;
+        padding-left: 0.5rem;
+      }
+
+      .tabs button {
+        appearance: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        min-width: 11rem;
+        padding: 0.7rem 1.6rem 0.55rem;
+        color: #0f0a1e8c;
+        background: #e7dfd2;
+        border: 1px solid var(--border-warm);
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        top: 2px;
+        transition: background 120ms ease, color 120ms ease;
+      }
+
+      .tabs button:hover {
+        color: var(--ink);
+        background: #efe8dc;
+      }
+
+      /* La pestana activa se une al panel: tapa su borde superior. */
+      .tabs button[aria-selected='true'] {
+        color: var(--brand-deep);
+        background: var(--panel);
+        top: 0;
+        padding-bottom: 0.75rem;
+        z-index: 1;
+      }
+
+      .tabs button[aria-selected='true']::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        background: var(--panel);
+      }
+
+      .panel {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 0 10px 0 0;
+        padding: 2rem 2.25rem 3rem;
+      }
+
+      .panel[hidden] {
+        display: none;
+      }
+
+      /* ── Contenido ─────────────────────────────────────────────────────── */
+
+      .lead {
+        font-size: 1.05rem;
+        color: #0f0a1ecc;
+        max-width: 46rem;
+      }
+
+      section.block {
+        border-top: 1px solid var(--border-warm);
+        padding-top: 1.4rem;
+        margin-top: 2rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border-warm);
+        border-radius: 10px;
+        padding: 1.1rem 1.25rem;
+      }
+
+      .card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .card .meta {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--action);
+        font-weight: 600;
+      }
+
+      a.card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      a.card:hover,
+      a.card:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px #4c1d951f;
+        border-color: var(--brand);
+      }
+
+      .pending {
+        border: 1px dashed var(--border-warm);
+        border-radius: 8px;
+        background: #0f0a1e05;
+        color: #0f0a1e80;
+        padding: 1.4rem;
+        text-align: center;
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 48rem) {
+        body {
+          flex-direction: column;
+        }
+
+        .side {
+          flex: 0 0 auto;
+        }
+
+        .side nav {
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 0.6rem;
+        }
+
+        .side .label,
+        .side .foot {
+          display: none;
+        }
+
+        .page {
+          padding: 1rem 1rem 0;
+        }
+
+        .topbar {
+          padding: 0.7rem 1rem 0;
+        }
+
+        .tabs button {
+          min-width: 0;
+          flex: 1;
+          padding-inline: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body data-path="/contenido">
+    <aside class="side">
+      <div class="brand">
+        <img src="/logo.png" alt="AI Builders" />
+        <div>
+          <h1>AI Builders · Hackathon</h1>
+          <div class="sub">Xela</div>
+        </div>
+      </div>
+
+      <nav aria-label="Secciones">
+        <span class="label">Secciones</span>
+        <a href="/"><span class="num">0</span> Resumen</a>
+        <a href="/contenido/"><span class="num">1</span> Contenido</a>
+        <a href="/desafio/"><span class="num">2</span> Desafío</a>
+        <a href="/evaluacion/"><span class="num">3</span> Evaluación</a>
+        <a href="/entrega/"><span class="num">4</span> Entrega</a>
+      </nav>
+
+      <div class="foot">Hackathon<br />AI Builders GT</div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <a class="md-dl" href="/hackaton.md" download
+           title="Descarga toda la documentación del hackatón en un solo Markdown, listo para dárselo a una IA">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v11" />
+            <path d="M7.5 9.5 12 14l4.5-4.5" />
+            <path d="M5 20h14" />
+          </svg>
+          Descargar todo (.md)
+        </a>
+      </div>
+      <style>
+  .contenido table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.86rem;
+    margin: 0.6rem 0 0;
+  }
+
+  .contenido table th {
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--brand-deep);
+    border-bottom: 2px solid var(--border-warm);
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .contenido table td {
+    padding: 0.42rem 0.6rem;
+    border-bottom: 1px solid var(--border-warm);
+    vertical-align: top;
+  }
+
+  .contenido table td:first-child {
+    white-space: nowrap;
+  }
+
+  .contenido table tr:hover td {
+    background: #4c1d9508;
+  }
+
+  .contenido table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .contenido .codes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+
+  .contenido .codes > div {
+    border: 1px solid var(--border-warm);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    background: var(--panel);
+  }
+
+  .contenido .codes h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--brand-deep);
+  }
+
+  .contenido .codes ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .contenido .note {
+    border-left: 3px solid var(--action);
+    background: #0f766e0d;
+    padding: 0.8rem 1.05rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .contenido .note.warn {
+    border-left-color: #b45309;
+    background: #b4530910;
+  }
+
+  .contenido .keyfacts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 0.7rem;
+    margin: 1rem 0 0;
+  }
+
+  .contenido .keyfacts > div {
+    border: 1px solid var(--border-warm);
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    background: var(--panel);
+  }
+
+  .contenido .keyfacts b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.1;
+    color: var(--brand-deep);
+  }
+
+  .contenido .keyfacts span {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0f0a1e99;
+  }
+
+  .contenido ul.plain {
+    margin: 0.4rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .contenido ul.plain li {
+    margin-bottom: 0.4rem;
+  }
+
+  .contenido .dl {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: var(--action);
+    color: var(--on-brand);
+    transition: filter 120ms ease;
+  }
+
+  .contenido .dl:hover,
+  .contenido .dl:focus-visible {
+    filter: brightness(1.15);
+  }
+</style>
+
+<div class="page contenido">
+  <div class="tabs" role="tablist" aria-label="Contenido">
+    <button type="button" role="tab" id="tab-informacion" aria-controls="informacion" aria-selected="true">
+      Información
+    </button>
+    <button type="button" role="tab" id="tab-estructura" aria-controls="estructura" aria-selected="false" tabindex="-1">
+      Estructura
+    </button>
+    <button type="button" role="tab" id="tab-archivos" aria-controls="archivos" aria-selected="false" tabindex="-1">
+      Archivos
+    </button>
+  </div>
+
+  <!-- ── Información ──────────────────────────────────────────────────────── -->
+  <section class="panel" id="informacion" role="tabpanel" aria-labelledby="tab-informacion" tabindex="0">
+    <div class="wrap">
+      <h1>Información</h1>
+      <p class="lead">
+        Vas a trabajar con el dataset <b>Educación Formal 2024</b>: el registro de todas las
+        inscripciones del sistema educativo guatemalteco durante ese ciclo escolar.
+      </p>
+
+      <div class="keyfacts">
+        <div><b>4.3 M</b><span>Registros</span></div>
+        <div><b>22</b><span>Departamentos</span></div>
+        <div><b>15</b><span>Columnas</span></div>
+        <div><b>2024</b><span>Ciclo escolar</span></div>
+      </div>
+
+      <section class="block">
+        <h2>De dónde vienen</h2>
+        <p>
+          Los datos provienen de los <b>registros administrativos del sistema educativo</b>: cada
+          año, los establecimientos del país reportan al Ministerio de Educación quién se inscribió,
+          en qué nivel y grado, y cómo terminó el ciclo. Esa información se consolida y se publica
+          como dato abierto.
+        </p>
+        <p>
+          La fuente oficial que usaremos es el portal de datos abiertos del
+          <b>Instituto Nacional de Estadística (INE)</b>:
+          <a href="https://datos.ine.gob.gt/dataset/educacion-formal-2024" target="_blank" rel="noopener">
+            datos.ine.gob.gt/dataset/educacion-formal-2024</a>.
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>Qué son exactamente</h2>
+        <p>
+          Son <b>microdatos</b>: en lugar de entregarte totales ya calculados, te entregan el detalle
+          fila por fila. <b>Cada fila representa una inscripción</b>, es decir, un estudiante
+          matriculado en un establecimiento durante 2024.
+        </p>
+        <p>
+          Cada fila no dice quién es la persona —no hay nombres ni identificadores— sino
+          <b>cómo y dónde estudia</b>: el departamento, el establecimiento, el nivel educativo y
+          grado, si la escuela es pública o privada, si está en área urbana o rural, el sexo, el
+          pueblo de pertenencia, la jornada, el plan de estudios, y cómo cerró el año (aprobado,
+          no aprobado o retirado), además de si repite grado o se está graduando.
+        </p>
+        <p>
+          No es una encuesta ni una muestra estadística: es un <b>censo administrativo</b>, o sea la
+          totalidad de los registros del sistema. Por eso son más de cuatro millones de filas.
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>Para qué se usan</h2>
+        <p>
+          Este tipo de datos es la base con la que se toman decisiones sobre educación pública.
+          Sirven, entre otras cosas, para:
+        </p>
+        <ul class="plain">
+          <li>
+            <b>Planificar y asignar recursos:</b> saber dónde hay más estudiantes, qué niveles están
+            saturados y en qué municipios crece o cae la matrícula.
+          </li>
+          <li>
+            <b>Medir resultados:</b> calcular qué porcentaje aprueba, no aprueba o abandona el año,
+            y comparar entre departamentos, niveles o sectores.
+          </li>
+          <li>
+            <b>Detectar brechas:</b> contrastar lo urbano contra lo rural, lo público contra lo
+            privado, o cómo varían los resultados según sexo y pueblo de pertenencia.
+          </li>
+          <li>
+            <b>Investigación y periodismo de datos:</b> sustentar reportajes, tesis y estudios con
+            evidencia y no con percepciones.
+          </li>
+        </ul>
+        <p style="margin-top: 0.9rem">
+          Preguntas como <i>"¿en qué departamento se aprueba menos el nivel básico?"</i> o
+          <i>"¿se abandona más la escuela en el área rural?"</i> se pueden responder con este dataset
+          —pero solo después de procesarlo, porque tal como viene no es legible.
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>Qué no contienen</h2>
+        <p>
+          Importante para no prometer lo que el dataset no puede dar:
+        </p>
+        <ul class="plain">
+          <li>Solo abarca el ciclo <b>2024</b>: no hay manera de comparar contra otros años.</li>
+          <li>
+            No hay identificador de estudiante, así que <b>no se puede seguir a una persona</b> en el
+            tiempo ni reconstruir su trayectoria.
+          </li>
+          <li>
+            No incluye calificaciones, edad, discapacidad, datos socioeconómicos, ni información
+            sobre docentes o infraestructura de los establecimientos.
+          </li>
+        </ul>
+      </section>
+
+      <div class="note">
+        En la pestaña <b>Estructura</b> tienes el detalle técnico de columnas, códigos y formato.
+        En <b>Archivos</b> están las descargas.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Estructura ───────────────────────────────────────────────────────── -->
+  <section class="panel" id="estructura" role="tabpanel" aria-labelledby="tab-estructura" tabindex="0" hidden>
+    <div class="wrap">
+      <h1>Estructura</h1>
+      <p class="lead">
+        Referencia técnica del dataset: formato, columnas y códigos. Pensada para que tú o tu
+        asistente de IA sepan exactamente qué esperar al leer los archivos.
+      </p>
+
+      <section class="block">
+        <h2>Formato de entrega</h2>
+        <ul class="plain">
+          <li>
+            <b>23 archivos</b> en formato <code>.xlsx</code> (Excel): <b>22 de datos</b>, uno por
+            departamento, más <b>1 diccionario de variables</b>.
+          </li>
+          <li>
+            Cada archivo de datos tiene una <b>hoja con los registros</b>. La primera fila son los
+            encabezados; de la segunda en adelante, los datos.
+          </li>
+          <li>
+            <b>Grano:</b> una fila es una inscripción. Todos los archivos comparten exactamente el
+            mismo esquema de 15 columnas, así que se pueden concatenar.
+          </li>
+          <li>
+            <b>Sin celdas vacías:</b> cuando un dato no se registró, viene el código
+            <code>9</code> (Ignorado), que es un valor real y no un faltante.
+          </li>
+        </ul>
+        <div class="note warn">
+          Casi todos los valores son <b>códigos numéricos</b>, no texto. El diccionario de variables
+          es el que traduce cada código a su etiqueta; sin él los datos no se interpretan.
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Las 15 columnas</h2>
+        <table>
+          <thead>
+            <tr><th>Columna</th><th>Tipo</th><th>Qué contiene</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Año</code></td><td>Entero</td><td>Ciclo escolar. Siempre <code>2024</code>.</td></tr>
+            <tr><td><code>CodEstablecimiento</code></td><td>Texto</td><td>Código del establecimiento, con formato <code>DD-MM-NNNN-SS</code> (ver abajo).</td></tr>
+            <tr><td><code>Departamento_F</code></td><td>Entero</td><td>Departamento, del <code>1</code> al <code>22</code>. Ver catálogo.</td></tr>
+            <tr><td><code>Depto_mupio</code></td><td>Entero</td><td>Campo de departamento y municipio. Ver notas.</td></tr>
+            <tr><td><code>Sector</code></td><td>Código</td><td>Quién administra el establecimiento.</td></tr>
+            <tr><td><code>Área</code></td><td>Código</td><td>Ubicación urbana o rural.</td></tr>
+            <tr><td><code>Sexo</code></td><td>Código</td><td>Sexo del estudiante.</td></tr>
+            <tr><td><code>Grado</code></td><td>Entero</td><td>Grado que cursa. Su significado depende de <code>Nivel</code>.</td></tr>
+            <tr><td><code>Nivel</code></td><td>Código</td><td>Nivel educativo.</td></tr>
+            <tr><td><code>Pueblo_Per</code></td><td>Código</td><td>Pueblo de pertenencia.</td></tr>
+            <tr><td><code>Plan_Est</code></td><td>Código</td><td>Plan de estudios (modalidad de asistencia).</td></tr>
+            <tr><td><code>Jornada_Est</code></td><td>Código</td><td>Jornada en que estudia.</td></tr>
+            <tr><td><code>Resultado_F</code></td><td>Código</td><td>Cómo cerró el ciclo escolar.</td></tr>
+            <tr><td><code>Repitente</code></td><td>Código</td><td>Si está repitiendo el grado.</td></tr>
+            <tr><td><code>Graduando</code></td><td>Código</td><td>Si se gradúa en ese ciclo.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="block">
+        <h2>Catálogo de códigos</h2>
+        <div class="codes">
+          <div>
+            <h4>Sector</h4>
+            <ul>
+              <li><code>1</code> Público</li>
+              <li><code>2</code> Privado</li>
+              <li><code>3</code> Municipal</li>
+              <li><code>4</code> Cooperativa</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Área</h4>
+            <ul>
+              <li><code>1</code> Urbana</li>
+              <li><code>2</code> Rural</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Sexo</h4>
+            <ul>
+              <li><code>1</code> Hombre</li>
+              <li><code>2</code> Mujer</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Nivel</h4>
+            <ul>
+              <li><code>1</code> Preprimaria</li>
+              <li><code>2</code> Primaria</li>
+              <li><code>3</code> Básico</li>
+              <li><code>4</code> Diversificado</li>
+              <li><code>5</code> Primaria de adultos</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Pueblo de pertenencia</h4>
+            <ul>
+              <li><code>1</code> Maya</li>
+              <li><code>2</code> Garífuna</li>
+              <li><code>3</code> Xinka</li>
+              <li><code>4</code> Afrodescendiente / Creole / Afromestizo</li>
+              <li><code>5</code> Ladino / Mestizo</li>
+              <li><code>6</code> Extranjero</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Plan de estudios</h4>
+            <ul>
+              <li><code>1</code> Diario</li>
+              <li><code>2</code> Fin de semana</li>
+              <li><code>3</code> Virtual a distancia</li>
+              <li><code>4</code> Semipresencial</li>
+              <li><code>5</code> Mixto</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Jornada</h4>
+            <ul>
+              <li><code>1</code> Matutina</li>
+              <li><code>2</code> Vespertina</li>
+              <li><code>3</code> Nocturna</li>
+              <li><code>4</code> Doble</li>
+              <li><code>5</code> Intermedia</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Resultado final</h4>
+            <ul>
+              <li><code>1</code> Promovido</li>
+              <li><code>2</code> Vigente</li>
+              <li><code>3</code> Retirado</li>
+              <li><code>4</code> Retirado definitivo</li>
+              <li><code>5</code> No promovido</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Repitente</h4>
+            <ul>
+              <li><code>1</code> Sí</li>
+              <li><code>2</code> No</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Graduando</h4>
+            <ul>
+              <li><code>1</code> Sí es graduando</li>
+              <li><code>2</code> No es graduando</li>
+              <li><code>9</code> Ignorado</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Catálogo de departamentos</h2>
+        <p>
+          El valor de <code>Departamento_F</code> corresponde al orden oficial:
+        </p>
+        <div class="codes">
+          <div>
+            <ul>
+              <li><code>1</code> Guatemala</li>
+              <li><code>2</code> El Progreso</li>
+              <li><code>3</code> Sacatepéquez</li>
+              <li><code>4</code> Chimaltenango</li>
+              <li><code>5</code> Escuintla</li>
+              <li><code>6</code> Santa Rosa</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li><code>7</code> Sololá</li>
+              <li><code>8</code> Totonicapán</li>
+              <li><code>9</code> Quetzaltenango</li>
+              <li><code>10</code> Suchitepéquez</li>
+              <li><code>11</code> Retalhuleu</li>
+              <li><code>12</code> San Marcos</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li><code>13</code> Huehuetenango</li>
+              <li><code>14</code> Quiché</li>
+              <li><code>15</code> Baja Verapaz</li>
+              <li><code>16</code> Alta Verapaz</li>
+              <li><code>17</code> Petén</li>
+              <li><code>18</code> Izabal</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li><code>19</code> Zacapa</li>
+              <li><code>20</code> Chiquimula</li>
+              <li><code>21</code> Jalapa</li>
+              <li><code>22</code> Jutiapa</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top: 0.8rem">
+          El diccionario incluye además el catálogo completo de <b>municipios</b>, con un código de
+          cuatro dígitos donde los dos primeros son el departamento (por ejemplo, <code>0101</code>
+          es el municipio de Guatemala).
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>El código de establecimiento</h2>
+        <p>
+          <code>CodEstablecimiento</code> no es un identificador plano: codifica una jerarquía en
+          cuatro segmentos separados por guiones, como <code>19-01-0001-42</code>.
+        </p>
+        <table>
+          <thead>
+            <tr><th>Segmento</th><th>Ejemplo</th><th>Qué es</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1.º</td><td><code>19</code></td><td>Departamento</td></tr>
+            <tr><td>2.º</td><td><code>01</code></td><td>Municipio dentro del departamento</td></tr>
+            <tr><td>3.º</td><td><code>0001</code></td><td>Número del establecimiento</td></tr>
+            <tr><td>4.º</td><td><code>42</code></td><td>Nivel educativo que ofrece</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 0.8rem">
+          Los valores del cuarto segmento son: <code>40</code>, <code>41</code> y <code>42</code>
+          preprimaria · <code>43</code> primaria · <code>44</code> primaria de adultos ·
+          <code>45</code> básico · <code>46</code> diversificado.
+        </p>
+        <div class="note">
+          Como el nivel va dentro del código, <b>un mismo establecimiento que atiende varios niveles
+          aparece con varios códigos distintos</b>. Contar códigos únicos no equivale a contar
+          escuelas.
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Notas para interpretar correctamente</h2>
+        <ul class="plain">
+          <li>
+            <b>El municipio se deriva del código del establecimiento</b>, no de la columna
+            <code>Depto_mupio</code>: esa columna trae un valor constante dentro de cada archivo y no
+            sirve para desagregar.
+          </li>
+          <li>
+            <b><code>Grado</code> siempre se lee junto a <code>Nivel</code>.</b> Los rangos son:
+            preprimaria <code>0</code>–<code>6</code>, primaria <code>1</code>–<code>6</code>, básico
+            <code>1</code>–<code>3</code>, diversificado <code>4</code>–<code>7</code> y primaria de
+            adultos <code>1</code>–<code>4</code>. Un <code>1</code> de primaria no es lo mismo que un
+            <code>1</code> de básico.
+          </li>
+          <li>
+            <b>El diccionario menciona una variable <code>Modalidad</code></b> (bilingüe /
+            monolingüe) que <b>no existe</b> en los archivos de datos. No la asumas.
+          </li>
+          <li>
+            <b>El código <code>9</code> (Ignorado) es un dato real.</b> Decide si lo excluyes o lo
+            reportas aparte, pero sé consistente y documenta la decisión.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>Inconsistencias conocidas</h2>
+        <p>
+          Estas son particularidades reales de los archivos, verificadas sobre los datos. No son
+          errores tuyos: si no las tomas en cuenta, tus resultados van a salir mal. Tenerlas
+          presentes te ahorra horas de depuración.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Qué pasa</th><th>Dónde</th><th>Cómo manejarlo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Prefijo <code>00-</code> en el código</b><br />
+                Cerca del 36% de los registros del departamento de Guatemala usan
+                <code>00-</code> como primer segmento en lugar de <code>01-</code>. Corresponden a
+                establecimientos de la capital.</td>
+              <td>Solo en <code>guatemala.xlsx</code>. Ningún otro departamento lo presenta.</td>
+              <td>Normaliza el prefijo antes de derivar el municipio. Si no lo haces, a Guatemala le
+                saldrán cerca de 39 municipios en lugar de los <b>17</b> reales, y unos 310 mil
+                registros quedarán mal atribuidos.</td>
+            </tr>
+            <tr>
+              <td><b><code>Depto_mupio</code> no varía</b><br />
+                Su valor es constante dentro de cada archivo, así que no identifica al municipio
+                aunque el nombre lo sugiera.</td>
+              <td>En los 22 archivos de datos.</td>
+              <td>Ignora esa columna para desagregar por municipio; usa el segundo segmento de
+                <code>CodEstablecimiento</code>.</td>
+            </tr>
+            <tr>
+              <td><b><code>Modalidad</code> documentada pero ausente</b><br />
+                El diccionario define la variable (bilingüe / monolingüe), pero la columna no existe
+                en los archivos de datos.</td>
+              <td>Diccionario de variables.</td>
+              <td>No la asumas ni intentes derivarla.</td>
+            </tr>
+            <tr>
+              <td><b><code>Resultado_F = 4</code> casi no aparece</b><br />
+                "Retirado definitivo" está definido en el diccionario, pero en la práctica el retiro
+                se concentra en el código <code>3</code>.</td>
+              <td>En todos los archivos.</td>
+              <td>Decide cómo tratas el retiro y documéntalo. Si agrupas <code>3</code> y
+                <code>4</code>, dilo explícitamente.</td>
+            </tr>
+            <tr>
+              <td><b>Hojas adicionales vacías</b><br />
+                El archivo trae hojas extra sin ningún registro.</td>
+              <td><code>solola.xlsx</code></td>
+              <td>Lee la hoja que contiene los datos, no la primera por posición a ciegas.</td>
+            </tr>
+            <tr>
+              <td><b>Conteo de municipios inflado</b><br />
+                Derivando municipios sin normalizar el prefijo salen más de los que existen.</td>
+              <td>Efecto del caso <code>00-</code>.</td>
+              <td>El total nacional de municipios con datos debe quedar alrededor de
+                <b>340</b>, no cerca de 384.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note warn">
+          Atajo de verificación: si tu proceso reporta <b>17 municipios para Guatemala</b> y un total
+          cercano a <b>4,298,887 registros</b>, vas bien. Si Guatemala te da 39, no normalizaste el
+          prefijo <code>00-</code>.
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Cifras para validar tu lectura</h2>
+        <p>
+          Si tu proceso de carga está bien, deberías reproducir aproximadamente estos valores. Son
+          tu control de calidad:
+        </p>
+        <table>
+          <thead>
+            <tr><th>Indicador</th><th>Valor esperado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total de registros</td><td class="num">4,298,887</td></tr>
+            <tr><td>Sector: Público / Privado / Cooperativa / Municipal</td><td class="num">74.7% / 20.9% / 4.0% / 0.3%</td></tr>
+            <tr><td>Área: Rural / Urbana</td><td class="num">61.4% / 38.6%</td></tr>
+            <tr><td>Sexo: Hombre / Mujer</td><td class="num">50.7% / 49.3%</td></tr>
+            <tr><td>Nivel: Primaria / Básico / Preprimaria / Diversificado</td><td class="num">56.4% / 17.8% / 17.1% / 8.5%</td></tr>
+            <tr><td>Resultado: Promovido / No promovido / Retirado</td><td class="num">85.2% / 9.2% / 5.5%</td></tr>
+            <tr><td>Municipios en el departamento de Guatemala</td><td class="num">17</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </section>
+
+  <!-- ── Archivos ─────────────────────────────────────────────────────────── -->
+  <section class="panel" id="archivos" role="tabpanel" aria-labelledby="tab-archivos" tabindex="0" hidden>
+    <div class="wrap">
+      <h1>Archivos</h1>
+      <p class="lead">
+        El dataset se entrega en 23 archivos <code>.xlsx</code>: uno por departamento más el
+        diccionario de variables. Todos los archivos de datos comparten el mismo esquema.
+      </p>
+
+      <section class="block">
+        <h2>Diccionario de variables</h2>
+        <p>Empieza por aquí: es el archivo que traduce todos los códigos.</p>
+        <table>
+          <thead>
+            <tr><th>Archivo</th><th>Contenido</th><th>Tamaño</th><th>Descarga</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>diccionario_de_variables.xlsx</code></td>
+              <td>Catálogo de variables, códigos, departamentos y municipios</td>
+              <td class="num">25 KB</td>
+              <td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/diccionario_de_variables.xlsx" download>Descargar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="block">
+        <h2>Datos por departamento</h2>
+        <table>
+          <thead>
+            <tr><th>Departamento</th><th>Archivo</th><th>Registros</th><th>Tamaño</th><th>Descarga</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Alta Verapaz</td><td><code>alta_verapaz.xlsx</code></td><td class="num">391,085</td><td class="num">20.3 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/alta_verapaz.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Baja Verapaz</td><td><code>baja_verapaz.xlsx</code></td><td class="num">81,736</td><td class="num">4.2 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/baja_verapaz.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Chimaltenango</td><td><code>chimaltenango.xlsx</code></td><td class="num">166,965</td><td class="num">8.6 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/chimaltenango.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Chiquimula</td><td><code>chiquimula.xlsx</code></td><td class="num">127,409</td><td class="num">6.6 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/chiquimula.xlsx" download>Descargar</a></td></tr>
+            <tr><td>El Progreso</td><td><code>el_progreso.xlsx</code></td><td class="num">49,803</td><td class="num">2.5 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/el_progreso.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Escuintla</td><td><code>escuintla.xlsx</code></td><td class="num">207,618</td><td class="num">10.7 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/escuintla.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Guatemala</td><td><code>guatemala.xlsx</code></td><td class="num">863,879</td><td class="num">42.5 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/guatemala.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Huehuetenango</td><td><code>huehuetenango.xlsx</code></td><td class="num">316,771</td><td class="num">16.5 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/huehuetenango.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Izabal</td><td><code>izabal.xlsx</code></td><td class="num">120,326</td><td class="num">6.2 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/izabal.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Jalapa</td><td><code>jalapa.xlsx</code></td><td class="num">99,625</td><td class="num">5.1 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/jalapa.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Jutiapa</td><td><code>jutiapa.xlsx</code></td><td class="num">134,571</td><td class="num">6.9 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/jutiapa.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Petén</td><td><code>peten.xlsx</code></td><td class="num">169,629</td><td class="num">8.8 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/peten.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Quetzaltenango</td><td><code>quetzaltenango.xlsx</code></td><td class="num">232,627</td><td class="num">12.0 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/quetzaltenango.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Quiché</td><td><code>quiche.xlsx</code></td><td class="num">268,998</td><td class="num">14.0 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/quiche.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Retalhuleu</td><td><code>retalhuleu.xlsx</code></td><td class="num">98,128</td><td class="num">5.1 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/retalhuleu.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Sacatepéquez</td><td><code>sacatepequez.xlsx</code></td><td class="num">91,552</td><td class="num">4.7 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/sacatepequez.xlsx" download>Descargar</a></td></tr>
+            <tr><td>San Marcos</td><td><code>san_marcos.xlsx</code></td><td class="num">303,565</td><td class="num">15.8 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/san_marcos.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Santa Rosa</td><td><code>santa_rosa.xlsx</code></td><td class="num">108,264</td><td class="num">5.6 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/santa_rosa.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Sololá</td><td><code>solola.xlsx</code></td><td class="num">122,831</td><td class="num">6.3 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/solola.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Suchitepéquez</td><td><code>suchitepequez.xlsx</code></td><td class="num">159,287</td><td class="num">8.3 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/suchitepequez.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Totonicapán</td><td><code>totonicapan.xlsx</code></td><td class="num">113,139</td><td class="num">5.8 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/totonicapan.xlsx" download>Descargar</a></td></tr>
+            <tr><td>Zacapa</td><td><code>zacapa.xlsx</code></td><td class="num">71,079</td><td class="num">3.7 MB</td><td><a class="dl" href="https://hackaton-aibuildersgt-datos.s3.us-east-1.amazonaws.com/zacapa.xlsx" download>Descargar</a></td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 0.9rem">
+          <b>Total:</b> 4,298,887 registros. Guatemala es el archivo más grande, con una quinta parte
+          de todo el dataset; El Progreso, el más pequeño.
+        </p>
+      </section>
+    </div>
+  </section>
+</div>
+
+    </main>
+
+    
+
+    <script>
+      // Tabs: una sola pestana visible. El hash de la URL elige la inicial.
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+      function select(id) {
+        for (const tab of tabs) {
+          const target = tab.getAttribute('aria-controls');
+          const active = target === id;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          document.getElementById(target).hidden = !active;
+        }
+      }
+
+      for (const [index, tab] of tabs.entries()) {
+        tab.addEventListener('click', () => select(tab.getAttribute('aria-controls')));
+
+        // Flechas para moverse entre pestanas, como pide el patron de tablist.
+        tab.addEventListener('keydown', (event) => {
+          const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (step === 0) return;
+          const next = tabs[(index + step + tabs.length) % tabs.length];
+          select(next.getAttribute('aria-controls'));
+          next.focus();
+        });
+      }
+
+      if (tabs.length > 0) {
+        const fromHash = location.hash.slice(1);
+        const known = tabs.some((tab) => tab.getAttribute('aria-controls') === fromHash);
+        select(known ? fromHash : tabs[0].getAttribute('aria-controls'));
+      }
+    </script>
+  </body>
+</html>
